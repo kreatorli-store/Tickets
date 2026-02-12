@@ -1,18 +1,32 @@
-import { Router } from "express";
-import { Request, Response } from "express";
-import User, { UserDocument } from "../models/user";
+import { Router, Request, Response } from "express";
+import User from "../models/user";
 import { omit } from "lodash";
+import jwt from "jsonwebtoken";
 
 const route = Router();
 
-//DONE: route -> signup new user
-route.post("/api/users/signup", async (req: Request<{}, {}>, res: Response) => {
+route.post("/api/users/signup", async (req: Request, res: Response) => {
   try {
-    let user = await User.create(req.body);
-    return res.send(omit(user.toObject(), "password"));
+    const user = await User.create(req.body);
+
+    // ✅ create JWT
+    const userJwt = jwt.sign(
+      {
+        userId: user.id,   // keep this key same as tickets expects (userId)
+        email: user.email,
+      },
+      process.env.JWT_KEY!
+    );
+
+    // ✅ store in session cookie
+    req.session = {
+      jwt: userJwt,
+    };
+
+    return res.status(201).send(omit(user.toObject(), "password"));
   } catch (error: any) {
     console.error(error.message);
-    return res.status(500);
+    return res.status(500).send({ message: error.message });
   }
 });
 

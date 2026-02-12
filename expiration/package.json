@@ -14,7 +14,9 @@
   "dependencies": {
     "@aetickets/common": "^1.0.20",
     "bull": "^4.10.4",
+    "bullmq": "^5.67.3",
     "cors": "^2.8.5",
+    "ioredis": "^5.9.2",
     "node-nats-streaming": "^0.3.2"
   },
   "devDependencies": {

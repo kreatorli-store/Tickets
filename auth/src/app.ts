@@ -1,6 +1,6 @@
 import "express-async-errors";
 import express from "express";
-import cookiePrser from "cookie-parser";
+import cookieSession from "cookie-session";
 import cors from "cors";
 import morgan from "morgan";
 
@@ -11,6 +11,7 @@ import { signupRouter } from "./routes/signup";
 
 const app = express();
 app.set("trust proxy", true);
+
 app.use(
   cors({
     origin: "*",
@@ -19,7 +20,14 @@ app.use(
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cookiePrser());
+
+// ✅ THIS is what creates the "session" cookie
+app.use(
+  cookieSession({
+    signed: false,
+    secure: false, // must be false for localhost + Postman (http)
+  })
+);
 
 app.use(currentUserRouter);
 app.use(signinRouter);
