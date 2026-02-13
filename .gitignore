@@ -4,3 +4,5 @@ build/
 logos/
 diagrams/
 Tickets.postman_collection.json
+.env
+.env.*

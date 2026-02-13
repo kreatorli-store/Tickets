@@ -43,8 +43,6 @@ setTimeout(async () => {
   console.log("🧪 Test job added. Waiting...");
 }, 2000);
 
-
-
 };
 
 start();
