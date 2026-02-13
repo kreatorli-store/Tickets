@@ -3,6 +3,8 @@ import { app } from "./app";
 import { natsWrapper } from "./nats-wrapper";
 import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
+import dotenv from "dotenv";
+dotenv.config();
 
 const start = async () => {
   if (!process.env.JWT_KEY || !process.env.SALT_FACTORY) {

@@ -1,5 +1,7 @@
 import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 import { natsWrapper } from "./nats-wrapper";
+import { expirationQueue } from "./queues/expiration-queue";
+
 
 const start = async () => {
   if (!process.env.NATS_CLIENT_ID) {
@@ -31,6 +33,16 @@ const start = async () => {
     console.error(err);
     return;
   }
+  
+setTimeout(async () => {
+  console.log("🧪 Test: Adding job to expiration queue (5s delay)...");
+  await expirationQueue.add(
+    { orderId: "test-order-123" },
+    { delay: 5000 }
+  );
+  console.log("🧪 Test job added. Waiting...");
+}, 2000);
+
 };
 
 start();

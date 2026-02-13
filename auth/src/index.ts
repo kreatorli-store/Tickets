@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import dotenv from "dotenv";
+dotenv.config();
 
 const start = async () => {
   if (!process.env.JWT_KEY || !process.env.SALT_FACTORY) {
@@ -19,8 +21,8 @@ const start = async () => {
     return;
   }
 
-  app.listen(3000, () => {
-    console.log("Auth: Listening on port 3000 🚀");
+  app.listen(3001, () => {
+    console.log("Auth: Listening on port 3001 🚀");
   });
 };
 
